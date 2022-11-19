@@ -740,7 +740,7 @@ namespace olc::sound
 
 #if defined(SOUNDWAVE_USING_WINMM)
 #define _WIN32_LEAN_AND_MEAN
-#include <Windows.h>
+#include <windows.h>
 #undef min
 #undef max
 
