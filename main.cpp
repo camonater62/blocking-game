@@ -139,6 +139,8 @@ private:
     olc::sound::WaveEngine engine;
     unique_ptr<Song> song;
 
+    bool started;
+
     void Rotate(olc::vf2d& pos, Direction d) {
         float temp = 0;
         switch (d) {
@@ -167,12 +169,24 @@ public:
         playerDirection = UP;
         engine.InitialiseAudio();
 
+        started = false;
+
         song = make_unique<Song>("Toby Fox - Spear of Justice (Cut Ver.) (Silence1020) [Insane].osu", "audio.wav", &engine);
 
         return true;
     }
 
     bool OnUserUpdate(float fElapsedTime) override {
+        if (!started) {
+            DrawString(ScreenWidth() / 2, ScreenHeight() / 2, "Click to start!");
+            if (GetMouse(olc::Mouse::LEFT).bReleased) {
+                started = true;
+            }    
+
+            return true;
+        }
+
+
         if (!song->Playing()) {
             song->Start();
         }
